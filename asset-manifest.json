@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/mossaiq/static/css/main.d4c1c617.chunk.css",
+    "main.js": "/mossaiq/static/js/main.43e67e60.chunk.js",
+    "main.js.map": "/mossaiq/static/js/main.43e67e60.chunk.js.map",
+    "runtime-main.js": "/mossaiq/static/js/runtime-main.7f8fa5f5.js",
+    "runtime-main.js.map": "/mossaiq/static/js/runtime-main.7f8fa5f5.js.map",
+    "static/css/2.47e3df58.chunk.css": "/mossaiq/static/css/2.47e3df58.chunk.css",
+    "static/js/2.f933c174.chunk.js": "/mossaiq/static/js/2.f933c174.chunk.js",
+    "static/js/2.f933c174.chunk.js.map": "/mossaiq/static/js/2.f933c174.chunk.js.map",
+    "index.html": "/mossaiq/index.html",
+    "precache-manifest.fd5a49826039d7acbfb3657124f96e28.js": "/mossaiq/precache-manifest.fd5a49826039d7acbfb3657124f96e28.js",
+    "service-worker.js": "/mossaiq/service-worker.js",
+    "static/css/2.47e3df58.chunk.css.map": "/mossaiq/static/css/2.47e3df58.chunk.css.map",
+    "static/css/main.d4c1c617.chunk.css.map": "/mossaiq/static/css/main.d4c1c617.chunk.css.map",
+    "static/media/index.css": "/mossaiq/static/media/roboto-latin-900italic.ebf6d164.woff2"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.7f8fa5f5.js",
+    "static/css/2.47e3df58.chunk.css",
+    "static/js/2.f933c174.chunk.js",
+    "static/css/main.d4c1c617.chunk.css",
+    "static/js/main.43e67e60.chunk.js"
+  ]
+}
