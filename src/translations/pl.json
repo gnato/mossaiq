@@ -1,0 +1,11 @@
+{
+  "app.grid-config": "Konfiguracja planszy",
+  "app.render": "Generuj",
+  "grid-config.presets": "Ustawienia domyślne",
+  "grid-config.columns": "Liczba kolumn",
+  "grid-config.margins": "Odstępy",
+  "grid-config.box-width": "Szerokość kafelka",
+  "grid-config.box-height": "Wysokość kafelka",
+  "grid-config.items-count": "Liczba kafelek",
+  "grid-config.color": "Kolor tła"
+}

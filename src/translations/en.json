@@ -1,0 +1,11 @@
+{
+  "app.grid-config": "Surface config",
+  "app.render": "Render",
+  "grid-config.presets": "Presets",
+  "grid-config.columns": "Columns",
+  "grid-config.margins": "Margins",
+  "grid-config.box-width": "Box width",
+  "grid-config.box-height": "Box height",
+  "grid-config.items-count": "Boxes count",
+  "grid-config.color": "Color"
+}
