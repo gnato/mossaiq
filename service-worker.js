@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/mossaiq/precache-manifest.fd5a49826039d7acbfb3657124f96e28.js"
+  "/mossaiq/precache-manifest.8288c556802fe8fc1c9d04d33d21c137.js"
 );
 
 self.addEventListener('message', (event) => {
