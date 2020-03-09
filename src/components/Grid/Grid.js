@@ -15,7 +15,9 @@ const Grid = ({
   colorBackground,
   items,
   render,
-  onRenderComplete
+  srcPhotos,
+  onRenderComplete,
+  onPhotosChanged
 }) => {
   // params
   const [colsVal, setColsVal] = useState(cols);
@@ -24,6 +26,7 @@ const Grid = ({
   const [heightVal, setHeightVal] = useState(height);
   const [itemsVal, setItemsVal] = useState(items);
   const [colorBackgroundVal, setcolorBackgroundVal] = useState(colorBackground);
+  const [photos, setPhotos] = useState(srcPhotos);
 
   useEffect(() => {
     setColsVal(cols);
@@ -101,7 +104,7 @@ const Grid = ({
     window.addEventListener("drop", handleWindowDrop);
 
     return () => {
-      grid.destroy();
+      grid.current.destroy();
       window.removeEventListener("dragover", handleWindowDrop);
       window.removeEventListener("drop", handleWindowDrop);
     };
@@ -123,6 +126,17 @@ const Grid = ({
     });
   }, [render, onRenderComplete]);
 
+  const handlePhotoLoad = (photo, crop, idx) => {
+    const newPhotos = [...photos];
+    newPhotos[idx] = {
+      photo,
+      crop
+    };
+
+    setPhotos(newPhotos);
+    onPhotosChanged(newPhotos);
+  };
+
   // prepare boxes
   const boxes = [...Array(itemsVal).keys()].map(item => (
     <GridItem
@@ -131,6 +145,9 @@ const Grid = ({
       height={heightVal}
       margin={marginVal}
       content={`${item + 1}`}
+      srcPhoto={photos[item] ? photos[item].photo : null}
+      srcCrop={photos[item] ? photos[item].crop : null}
+      onPhotoLoad={(photo, crop) => handlePhotoLoad(photo, crop, item)}
     />
   ));
 
@@ -162,7 +179,9 @@ Grid.propTypes = {
   items: PropTypes.number.isRequired,
   colorBackground: PropTypes.string.isRequired,
   render: PropTypes.bool,
-  onRenderComplete: PropTypes.func
+  srcPhotos: PropTypes.array,
+  onRenderComplete: PropTypes.func,
+  onPhotosChanged: PropTypes.func
 };
 
 Grid.defaultProps = {
@@ -173,7 +192,9 @@ Grid.defaultProps = {
   items: 0,
   colorBackground: "#ddd",
   render: false,
-  onRenderComplete: () => {}
+  srcPhotos: [],
+  onRenderComplete: () => {},
+  onPhotosChanged: () => {}
 };
 
 export default Grid;

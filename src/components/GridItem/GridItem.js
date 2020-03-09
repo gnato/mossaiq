@@ -4,9 +4,17 @@ import smartcrop from "smartcrop";
 
 import "./style.scss";
 
-const GridItem = ({ width, height, margin, content }) => {
-  const [photo, setPhoto] = useState(null);
-  const [crop, setCrop] = useState(null);
+const GridItem = ({
+  width,
+  height,
+  margin,
+  content,
+  srcPhoto,
+  srcCrop,
+  onPhotoLoad
+}) => {
+  const [photo, setPhoto] = useState(srcPhoto);
+  const [crop, setCrop] = useState(srcCrop);
 
   const image = useRef();
 
@@ -37,9 +45,10 @@ const GridItem = ({ width, height, margin, content }) => {
 
   useEffect(() => {
     if (!image.current) return;
-    smartcrop
-      .crop(image.current, { width, height })
-      .then(val => setCrop(val.topCrop));
+    smartcrop.crop(image.current, { width, height }).then(val => {
+      setCrop(val.topCrop);
+      onPhotoLoad(photo, crop);
+    });
   }, [width, height, photo]);
 
   return (
@@ -83,7 +92,10 @@ GridItem.propTypes = {
   margin: PropTypes.number.isRequired,
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
-  content: PropTypes.string
+  content: PropTypes.string,
+  srcPhoto: PropTypes.string,
+  srcCrop: PropTypes.oneOf([null, PropTypes.object]),
+  onPhotoLoad: PropTypes.func
 };
 
 GridItem.defaultProps = {

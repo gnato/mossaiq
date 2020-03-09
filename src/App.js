@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FormattedMessage } from "react-intl";
 import clsx from "clsx";
 import Drawer from "@material-ui/core/Drawer";
@@ -17,6 +17,31 @@ import Grid from "./components/Grid";
 import GridConfig from "./components/GridConfig";
 
 import useStyles from "./App.styles";
+import SlideSwitcher from "./components/SlideSwitcher";
+
+const shallowCompare = (obj1, obj2) =>
+  Object.keys(obj1).length === Object.keys(obj2).length &&
+  Object.keys(obj1).every(key => obj1[key] === obj2[key]);
+
+const SlideGrid = React.memo(
+  ({ gridConfig, render, photos, onRenderComplete, onPhotosChanged }) => {
+    return (
+      <Grid
+        {...gridConfig}
+        render={render}
+        srcPhotos={photos}
+        onRenderComplete={onRenderComplete}
+        onPhotosChanged={onPhotosChanged}
+      />
+    );
+  },
+  (prevProps, nextProps) => {
+    return (
+      prevProps.render === nextProps.render &&
+      shallowCompare(prevProps.gridConfig, nextProps.gridConfig)
+    );
+  }
+);
 
 const App = () => {
   const classes = useStyles();
@@ -31,6 +56,79 @@ const App = () => {
 
   // grid config
   const [gridConfig, setGridConfig] = useState({});
+  const [gridPhotos, setGridPhotos] = useState({});
+  const [lastClonedId, setLastClonedId] = useState("");
+
+  // slide switcher
+  const [currentSlide, setCurrentSlide] = useState(1);
+  const [allSlides, setAllSlides] = useState(1);
+  const [slidesMapping, setSlidesMapping] = useState([`id-${Date.now()}`]);
+
+  const handleSlideAdd = () => {
+    setAllSlides(allSlides + 1);
+    setSlidesMapping([...slidesMapping, `id-${Date.now()}`]);
+  };
+
+  const handleSlideCopy = () => {
+    const id = slidesMapping[currentSlide - 1];
+    const newId = `id-${Date.now()}`;
+
+    if (gridPhotos[id]) {
+      const newPhotos = { ...gridPhotos, [newId]: gridPhotos[id] };
+      setGridPhotos(newPhotos);
+    }
+
+    setLastClonedId(newId);
+  };
+
+  useEffect(() => {
+    if (lastClonedId) {
+      setAllSlides(allSlides + 1);
+      setSlidesMapping([...slidesMapping, lastClonedId]);
+    }
+  }, [lastClonedId]);
+
+  const handleSlideDelete = () => {
+    setSlidesMapping(
+      slidesMapping.filter(slide => slide !== slidesMapping[currentSlide - 1])
+    );
+
+    if (allSlides === currentSlide) {
+      setCurrentSlide(currentSlide - 1);
+    }
+
+    setAllSlides(allSlides - 1);
+  };
+
+  const handleSlidePrev = () => {
+    setCurrentSlide(currentSlide - 1);
+  };
+
+  const handleSlideNext = () => {
+    setCurrentSlide(currentSlide + 1);
+  };
+
+  const handlePhotosChanged = (photos, slideId) => {
+    const newPhotos = { ...gridPhotos, [slideId]: photos };
+    setGridPhotos(newPhotos);
+  };
+
+  // slides
+  const slides = slidesMapping.map((id, idx) => {
+    const style = { display: idx + 1 === currentSlide ? "block" : "none" };
+    //const style = { opacity: idx + 1 === currentSlide ? 1 : 0.4 };
+    return (
+      <div style={style} key={id}>
+        <SlideGrid
+          gridConfig={gridConfig}
+          render={render}
+          onRenderComplete={() => setRender(false)}
+          photos={gridPhotos[id] || []}
+          onPhotosChanged={photos => handlePhotosChanged(photos, id)}
+        />
+      </div>
+    );
+  });
 
   return (
     <div className={classes.root}>
@@ -45,28 +143,39 @@ const App = () => {
           <Typography variant="h6" noWrap className={classes.title}>
             MossaIQ
           </Typography>
-
+          <SlideSwitcher
+            currentSlide={currentSlide}
+            countAllSlides={allSlides}
+            onAdd={handleSlideAdd}
+            onCopy={handleSlideCopy}
+            onDelete={handleSlideDelete}
+            onNext={handleSlideNext}
+            onPrev={handleSlidePrev}
+          />
           <Tooltip title={<FormattedMessage id="app.render" />}>
-            <IconButton
-              color="inherit"
-              disabled={render}
-              onClick={() => setRender(true)}
-              className={clsx(open && classes.hide)}
-            >
-              <CloudDownloadIcon />
-            </IconButton>
+            <span>
+              <IconButton
+                color="inherit"
+                disabled={render > 0}
+                onClick={() => setRender(true)}
+                className={clsx(open && classes.hide)}
+              >
+                <CloudDownloadIcon />
+              </IconButton>
+            </span>
           </Tooltip>
-
           <Tooltip title={<FormattedMessage id="app.grid-config" />}>
-            <IconButton
-              color="inherit"
-              edge="end"
-              disabled={render}
-              onClick={handleDrawerOpen}
-              className={clsx(open && classes.hide)}
-            >
-              <SettingsIcon />
-            </IconButton>
+            <span>
+              <IconButton
+                color="inherit"
+                edge="end"
+                disabled={render > 0}
+                onClick={handleDrawerOpen}
+                className={clsx(open && classes.hide)}
+              >
+                <SettingsIcon />
+              </IconButton>
+            </span>
           </Tooltip>
         </Toolbar>
       </AppBar>
@@ -76,11 +185,8 @@ const App = () => {
         })}
       >
         <div className={classes.drawerHeader} />
-        <Grid
-          {...gridConfig}
-          render={render}
-          onRenderComplete={() => setRender(false)}
-        />
+
+        {slides}
       </main>
       <Drawer
         className={classes.drawer}

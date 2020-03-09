@@ -7,5 +7,10 @@
   "grid-config.box-width": "Szerokość kafelka",
   "grid-config.box-height": "Wysokość kafelka",
   "grid-config.items-count": "Liczba kafelek",
-  "grid-config.color": "Kolor tła"
+  "grid-config.color": "Kolor tła",
+  "slide.next": "Następny",
+  "slide.prev": "Poprzedni",
+  "slide.add": "Dodaj",
+  "slide.delete": "Skasuj",
+  "slide.copy": "Skopiuj"
 }

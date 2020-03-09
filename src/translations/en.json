@@ -7,5 +7,10 @@
   "grid-config.box-width": "Box width",
   "grid-config.box-height": "Box height",
   "grid-config.items-count": "Boxes count",
-  "grid-config.color": "Color"
+  "grid-config.color": "Color",
+  "slide.next": "Next",
+  "slide.prev": "Previous",
+  "slide.add": "Add",
+  "slide.delete": "Delete",
+  "slide.copy": "Copy"
 }
