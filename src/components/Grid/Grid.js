@@ -115,14 +115,14 @@ const Grid = ({
     if (!render) return;
 
     html2canvas(gridOuter.current).then(canvas => {
-      const a = document.createElement("a");
+      /* const a = document.createElement("a");
       a.href = canvas
         .toDataURL("image/jpeg")
         .replace("image/jpeg", "image/octet-stream");
       a.download = `mossaiq.jpg`;
-      a.click();
+      a.click(); */
 
-      onRenderComplete();
+      onRenderComplete(canvas);
     });
   }, [render, onRenderComplete]);
 

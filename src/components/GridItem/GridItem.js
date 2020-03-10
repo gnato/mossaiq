@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import PropTypes from "prop-types";
 import smartcrop from "smartcrop";
 
@@ -43,13 +43,15 @@ const GridItem = ({
     return scale / 100;
   };
 
-  useEffect(() => {
+  const changeCrop = useCallback(() => {
     if (!image.current) return;
     smartcrop.crop(image.current, { width, height }).then(val => {
       setCrop(val.topCrop);
       onPhotoLoad(photo, crop);
     });
-  }, [width, height, photo]);
+  }, [width, height, photo, crop, onPhotoLoad]);
+
+  useEffect(changeCrop, [width, height, photo]);
 
   return (
     <div

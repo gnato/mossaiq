@@ -107,7 +107,7 @@ const GridConfig = ({ onValuesChanged = () => {} }) => {
   // push changed values outside
   useEffect(() => {
     onValuesChanged({ ...valSliders, colorBackground: valColor });
-  }, [valSliders, valColor]);
+  }, [valSliders, valColor, onValuesChanged]);
 
   return (
     <>

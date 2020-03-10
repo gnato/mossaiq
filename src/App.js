@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { FormattedMessage } from "react-intl";
 import clsx from "clsx";
 import Drawer from "@material-ui/core/Drawer";
@@ -18,6 +18,9 @@ import GridConfig from "./components/GridConfig";
 
 import useStyles from "./App.styles";
 import SlideSwitcher from "./components/SlideSwitcher";
+import { Backdrop, CircularProgress } from "@material-ui/core";
+
+const GIFEncoder = require("gifencoder");
 
 const shallowCompare = (obj1, obj2) =>
   Object.keys(obj1).length === Object.keys(obj2).length &&
@@ -53,6 +56,7 @@ const App = () => {
 
   // render
   const [render, setRender] = useState(false);
+  const [renderedItems, setRenderedItems] = useState([]);
 
   // grid config
   const [gridConfig, setGridConfig] = useState({});
@@ -81,12 +85,14 @@ const App = () => {
     setLastClonedId(newId);
   };
 
-  useEffect(() => {
+  const insertClonedSlide = useCallback(() => {
     if (lastClonedId) {
       setAllSlides(allSlides + 1);
       setSlidesMapping([...slidesMapping, lastClonedId]);
     }
-  }, [lastClonedId]);
+  }, [allSlides, lastClonedId, slidesMapping]);
+
+  useEffect(insertClonedSlide, [lastClonedId]);
 
   const handleSlideDelete = () => {
     setSlidesMapping(
@@ -109,20 +115,51 @@ const App = () => {
   };
 
   const handlePhotosChanged = (photos, slideId) => {
-    const newPhotos = { ...gridPhotos, [slideId]: photos };
-    setGridPhotos(newPhotos);
+    setGridPhotos(currentPhotos => ({ ...currentPhotos, [slideId]: photos }));
   };
+
+  const handleRenderComplete = (canvas, idx) => {
+    setRenderedItems(items => [...items, canvas]);
+  };
+
+  useEffect(() => {
+    if (renderedItems.length > 0 && renderedItems.length === allSlides) {
+      const { width, height } = renderedItems[0];
+      const encoder = new GIFEncoder(width, height);
+
+      encoder.setRepeat(0);
+      encoder.setDelay(1000);
+
+      encoder.start();
+      renderedItems.forEach(item => encoder.addFrame(item.getContext("2d")));
+      encoder.finish();
+
+      const templink = document.createElement("a");
+      templink.download = `${width}x${height}.gif`;
+      templink.href = URL.createObjectURL(
+        new Blob([new Uint8Array(encoder.out.data)], { type: "image/gif" })
+      );
+      templink.click();
+
+      setRender(false);
+      setRenderedItems([]);
+    }
+  }, [renderedItems, allSlides]);
 
   // slides
   const slides = slidesMapping.map((id, idx) => {
-    const style = { display: idx + 1 === currentSlide ? "block" : "none" };
+    const style =
+      idx + 1 === currentSlide || render
+        ? {}
+        : { position: "absolute", visibility: "hidden", pointerEvents: "none" };
+    //const style = { display: idx + 1 === currentSlide ? "block" : "none" };
     //const style = { opacity: idx + 1 === currentSlide ? 1 : 0.4 };
     return (
       <div style={style} key={id}>
         <SlideGrid
           gridConfig={gridConfig}
           render={render}
-          onRenderComplete={() => setRender(false)}
+          onRenderComplete={canvas => handleRenderComplete(canvas, idx)}
           photos={gridPhotos[id] || []}
           onPhotosChanged={photos => handlePhotosChanged(photos, id)}
         />
@@ -179,6 +216,9 @@ const App = () => {
           </Tooltip>
         </Toolbar>
       </AppBar>
+      <Backdrop className={classes.backdrop} open={render}>
+        <CircularProgress color="inherit" />
+      </Backdrop>
       <main
         className={clsx(classes.content, {
           [classes.contentShift]: open
