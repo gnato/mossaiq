@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/mossaiq/static/css/main.1ef04492.chunk.css",
-    "main.js": "/mossaiq/static/js/main.dba4ec24.chunk.js",
-    "main.js.map": "/mossaiq/static/js/main.dba4ec24.chunk.js.map",
+    "main.js": "/mossaiq/static/js/main.3e69d09e.chunk.js",
+    "main.js.map": "/mossaiq/static/js/main.3e69d09e.chunk.js.map",
     "runtime-main.js": "/mossaiq/static/js/runtime-main.7f8fa5f5.js",
     "runtime-main.js.map": "/mossaiq/static/js/runtime-main.7f8fa5f5.js.map",
     "static/css/2.47e3df58.chunk.css": "/mossaiq/static/css/2.47e3df58.chunk.css",
-    "static/js/2.be71c23d.chunk.js": "/mossaiq/static/js/2.be71c23d.chunk.js",
-    "static/js/2.be71c23d.chunk.js.map": "/mossaiq/static/js/2.be71c23d.chunk.js.map",
+    "static/js/2.d6b61110.chunk.js": "/mossaiq/static/js/2.d6b61110.chunk.js",
+    "static/js/2.d6b61110.chunk.js.map": "/mossaiq/static/js/2.d6b61110.chunk.js.map",
     "index.html": "/mossaiq/index.html",
-    "precache-manifest.8288c556802fe8fc1c9d04d33d21c137.js": "/mossaiq/precache-manifest.8288c556802fe8fc1c9d04d33d21c137.js",
+    "precache-manifest.d603025d4e7303d38be2a5a6c204deab.js": "/mossaiq/precache-manifest.d603025d4e7303d38be2a5a6c204deab.js",
     "service-worker.js": "/mossaiq/service-worker.js",
     "static/css/2.47e3df58.chunk.css.map": "/mossaiq/static/css/2.47e3df58.chunk.css.map",
     "static/css/main.1ef04492.chunk.css.map": "/mossaiq/static/css/main.1ef04492.chunk.css.map",
@@ -18,8 +18,8 @@
   "entrypoints": [
     "static/js/runtime-main.7f8fa5f5.js",
     "static/css/2.47e3df58.chunk.css",
-    "static/js/2.be71c23d.chunk.js",
+    "static/js/2.d6b61110.chunk.js",
     "static/css/main.1ef04492.chunk.css",
-    "static/js/main.dba4ec24.chunk.js"
+    "static/js/main.3e69d09e.chunk.js"
   ]
 }

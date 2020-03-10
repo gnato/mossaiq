@@ -1,23 +1,23 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "12911bfef16f518a859c40977897a746",
+    "revision": "6e64eebccb954d5c3866b87f87b4f544",
     "url": "/mossaiq/index.html"
   },
   {
-    "revision": "dbaaff61184d590cebc0",
+    "revision": "f58ff4a828a3fec705eb",
     "url": "/mossaiq/static/css/2.47e3df58.chunk.css"
   },
   {
-    "revision": "b8eb9e06e9b202a2f86e",
+    "revision": "3a9d7fe3bc791dc4910b",
     "url": "/mossaiq/static/css/main.1ef04492.chunk.css"
   },
   {
-    "revision": "dbaaff61184d590cebc0",
-    "url": "/mossaiq/static/js/2.be71c23d.chunk.js"
+    "revision": "f58ff4a828a3fec705eb",
+    "url": "/mossaiq/static/js/2.d6b61110.chunk.js"
   },
   {
-    "revision": "b8eb9e06e9b202a2f86e",
-    "url": "/mossaiq/static/js/main.dba4ec24.chunk.js"
+    "revision": "3a9d7fe3bc791dc4910b",
+    "url": "/mossaiq/static/js/main.3e69d09e.chunk.js"
   },
   {
     "revision": "1fcf35cd1721a07fec44",
