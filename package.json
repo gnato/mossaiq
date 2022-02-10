@@ -10,7 +10,7 @@
     "gifencoder": "^2.0.1",
     "html2canvas": "^1.0.0-rc.5",
     "muuri": "^0.8.0",
-    "node-sass": "^4.13.0",
+    "node-sass": "^7.0.0",
     "react": "^16.11.0",
     "react-color": "^2.18.0",
     "react-dom": "^16.11.0",
